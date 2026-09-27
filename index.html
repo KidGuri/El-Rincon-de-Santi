@@ -382,21 +382,20 @@
     margin-bottom: 48px;
   }
   .food-carousel {
-    position: relative;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 48px;
-  }
-  .food-carousel-track-wrap {
     overflow: hidden;
+  }
+  .food-carousel:hover .food-carousel-track {
+    animation-play-state: paused;
   }
   .food-carousel-track {
     display: flex;
-    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    gap: 20px;
+    width: max-content;
+    animation: foodScroll 40s linear infinite;
   }
   .food-slide {
-    flex: 0 0 33.333%;
-    padding: 0 10px;
+    flex-shrink: 0;
+    width: 320px;
   }
   .food-slide-inner {
     overflow: hidden;
@@ -423,58 +422,9 @@
     text-align: center;
   }
 
-  .food-carousel-btn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 44px;
-    height: 44px;
-    border-radius: 50%;
-    background: var(--white);
-    border: 1px solid var(--border);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    box-shadow: 0 4px 16px rgba(59,49,46,0.12);
-    transition: background 0.2s, transform 0.2s;
-    z-index: 2;
-  }
-  .food-carousel-btn:hover {
-    background: var(--cream);
-    transform: translateY(-50%) scale(1.05);
-  }
-  .food-carousel-btn svg {
-    width: 18px;
-    height: 18px;
-    stroke: var(--navy);
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-  }
-  .food-carousel-prev { left: 4px; }
-  .food-carousel-next { right: 4px; }
-
-  .food-carousel-dots {
-    display: flex;
-    justify-content: center;
-    gap: 8px;
-    margin-top: 28px;
-  }
-  .food-dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--border);
-    border: none;
-    cursor: pointer;
-    padding: 0;
-    transition: background 0.3s, transform 0.3s;
-  }
-  .food-dot.active {
-    background: var(--terra);
-    transform: scale(1.25);
+  @keyframes foodScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
   }
 
   /* ─── REVIEWS CAROUSEL ─── */
@@ -918,8 +868,6 @@
     .about-img-wrap { order: -1; }
     .about-img-deco { display: none; }
 
-    .spec-grid { grid-template-columns: 1fr; gap: 20px; }
-
     .review-card { width: 300px; padding: 22px; }
 
     section { padding: 64px 0; }
@@ -933,10 +881,7 @@
     .hero-logo { max-width: 360px; }
     .hero-subtitle { margin-bottom: 32px; }
 
-    .food-slide { flex: 0 0 50%; }
-    .food-carousel { padding: 0 24px; }
-    .food-carousel-prev { left: 0; }
-    .food-carousel-next { right: 0; }
+    .food-slide { width: 260px; }
 
     .parallax-divider { height: 240px; }
     .parallax-divider-img { background-attachment: scroll; }
@@ -946,7 +891,7 @@
     .review-card { width: 280px; padding: 20px; }
     .review-card .review-text { font-size: 13px; }
     .hero-logo { max-width: 280px; }
-    .food-slide { flex: 0 0 100%; }
+    .food-slide { width: 240px; }
     .parallax-divider { height: 180px; }
   }
 </style>
@@ -1042,8 +987,7 @@
       <span class="section-label reveal" data-i18n="spec.label">Lo que nos define</span>
       <h2 class="section-title reveal reveal-d1" data-i18n="spec.title">Nuestras <em>especialidades</em></h2>
     </div>
-    <div class="food-carousel reveal" id="foodCarousel">
-      <div class="food-carousel-track-wrap">
+    <div class="food-carousel reveal">
         <div class="food-carousel-track" id="foodTrack">
           <div class="food-slide">
             <div class="food-slide-inner">
@@ -1100,14 +1044,6 @@
             </div>
           </div>
         </div>
-      </div>
-      <button class="food-carousel-btn food-carousel-prev" onclick="foodCarouselMove(-1)" aria-label="Anterior">
-        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-      </button>
-      <button class="food-carousel-btn food-carousel-next" onclick="foodCarouselMove(1)" aria-label="Siguiente">
-        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-      </button>
-      <div class="food-carousel-dots" id="foodDots"></div>
     </div>
   </div>
 </section>
@@ -1530,72 +1466,11 @@
   }, { threshold: 0.12 });
   revealEls.forEach(function(el) { observer.observe(el); });
 
-  // ─── FOOD CAROUSEL ───
-  var foodIndex = 0;
-  var foodSlidesPerView = 3;
-  var foodTrack = document.getElementById('foodTrack');
-  var foodSlides = foodTrack.querySelectorAll('.food-slide');
-  var foodTotal = foodSlides.length;
-  var foodDotsContainer = document.getElementById('foodDots');
-
-  function getFoodSlidesPerView() {
-    if (window.innerWidth <= 600) return 1;
-    if (window.innerWidth <= 900) return 2;
-    return 3;
-  }
-
-  function getFoodMaxIndex() {
-    return Math.max(0, foodTotal - foodSlidesPerView);
-  }
-
-  function updateFoodCarousel() {
-    var pct = (foodIndex * 100) / foodSlidesPerView;
-    foodTrack.style.transform = 'translateX(-' + pct + '%)';
-    var dots = foodDotsContainer.querySelectorAll('.food-dot');
-    dots.forEach(function(d, i) { d.classList.toggle('active', i === foodIndex); });
-  }
-
-  function buildFoodDots() {
-    foodDotsContainer.innerHTML = '';
-    var max = getFoodMaxIndex();
-    for (var i = 0; i <= max; i++) {
-      var dot = document.createElement('button');
-      dot.className = 'food-dot' + (i === foodIndex ? ' active' : '');
-      dot.setAttribute('aria-label', 'Slide ' + (i + 1));
-      dot.onclick = (function(idx) { return function() { foodIndex = idx; updateFoodCarousel(); }; })(i);
-      foodDotsContainer.appendChild(dot);
-    }
-  }
-
-  function foodCarouselMove(dir) {
-    foodIndex = Math.max(0, Math.min(foodIndex + dir, getFoodMaxIndex()));
-    updateFoodCarousel();
-  }
-
-  function onFoodResize() {
-    var newPerView = getFoodSlidesPerView();
-    if (newPerView !== foodSlidesPerView) {
-      foodSlidesPerView = newPerView;
-      foodIndex = Math.min(foodIndex, getFoodMaxIndex());
-      buildFoodDots();
-    }
-    updateFoodCarousel();
-  }
-
-  foodSlidesPerView = getFoodSlidesPerView();
-  buildFoodDots();
-  updateFoodCarousel();
-  window.addEventListener('resize', onFoodResize);
-
-  // touch swipe
+  // ─── FOOD CAROUSEL (infinite) ───
   (function() {
-    var startX = 0;
-    var wrap = document.querySelector('.food-carousel-track-wrap');
-    wrap.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
-    wrap.addEventListener('touchend', function(e) {
-      var diff = startX - e.changedTouches[0].clientX;
-      if (Math.abs(diff) > 40) foodCarouselMove(diff > 0 ? 1 : -1);
-    }, { passive: true });
+    var track = document.getElementById('foodTrack');
+    var slides = track.innerHTML;
+    track.innerHTML = slides + slides;
   })();
 
   // ─── MOBILE NAV ───
