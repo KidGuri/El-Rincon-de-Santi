@@ -427,6 +427,15 @@
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
   }
+  @keyframes foodMobLeft {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+  @keyframes foodMobRight {
+    0% { transform: translateX(-50%); }
+    100% { transform: translateX(0); }
+  }
+  .food-carousel-mobile { display: none; }
 
   /* ─── MENU / CARTA ─── */
   .menu-section { background: var(--white); }
@@ -1041,22 +1050,43 @@
     .hero-subtitle { margin-bottom: 32px; }
 
     .parallax-divider { height: 240px; }
-    .parallax-divider-img { background-attachment: scroll; }
+    .parallax-divider-img { background-attachment: scroll; inset: -200px 0; }
 
-    .food-carousel-track {
-      flex-wrap: wrap;
-      width: 100% !important;
-      animation: none !important;
-      gap: 10px;
-      justify-content: center;
+    .food-carousel { display: none; }
+    .food-carousel-mobile { display: block; overflow: hidden; }
+    .food-mob-row { overflow: hidden; margin-bottom: 12px; }
+    .food-mob-row:last-child { margin-bottom: 0; }
+    .food-mob-track {
+      display: flex;
+      gap: 12px;
+      width: max-content;
     }
-    .food-slide {
-      width: calc(50% - 5px);
+    .food-mob-row:nth-child(1) .food-mob-track { animation: foodMobLeft 30s linear infinite; }
+    .food-mob-row:nth-child(2) .food-mob-track { animation: foodMobRight 28s linear infinite; }
+    .food-mob-row:hover .food-mob-track { animation-play-state: paused; }
+    .food-mob-slide {
       flex-shrink: 0;
+      width: 150px;
     }
-    .food-slide-caption { font-size: 13px; padding: 10px 8px; }
-    .food-slide img { aspect-ratio: 1/1; }
-    .food-slide-inner:hover { transform: none; box-shadow: none; }
+    .food-mob-slide img {
+      width: 100%;
+      aspect-ratio: 1/1;
+      object-fit: cover;
+      display: block;
+    }
+    .food-mob-slide .food-slide-caption {
+      font-size: 12px;
+      padding: 8px 6px;
+      font-family: 'Josefin Sans', sans-serif;
+      font-weight: 500;
+      color: var(--navy);
+      text-align: center;
+    }
+    .food-mob-slide .food-slide-inner {
+      background: var(--white);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
   }
 
   @media (max-width: 600px) {
@@ -1217,6 +1247,14 @@
             </div>
           </div>
         </div>
+    </div>
+    <div class="food-carousel-mobile reveal">
+      <div class="food-mob-row">
+        <div class="food-mob-track" id="foodMobRow1"></div>
+      </div>
+      <div class="food-mob-row">
+        <div class="food-mob-track" id="foodMobRow2"></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1735,21 +1773,24 @@
   }, { threshold: 0.12 });
   revealEls.forEach(function(el) { observer.observe(el); });
 
-  // ─── FOOD CAROUSEL (infinite on desktop, grid on mobile) ───
+  // ─── FOOD CAROUSEL ───
   (function() {
     var track = document.getElementById('foodTrack');
     var original = track.innerHTML;
-    function setupCarousel() {
-      if (window.innerWidth > 900) {
-        track.innerHTML = original + original;
-        track.style.animation = '';
-      } else {
-        track.innerHTML = original;
-        track.style.animation = 'none';
-      }
+    track.innerHTML = original + original;
+
+    var slides = track.querySelectorAll('.food-slide');
+    var all = [];
+    for (var i = 0; i < 9; i++) {
+      var s = slides[i];
+      var img = s.querySelector('img');
+      var cap = s.querySelector('.food-slide-caption');
+      all.push('<div class="food-mob-slide"><div class="food-slide-inner"><img src="' + img.src + '" alt="' + img.alt + '" loading="lazy"><div class="food-slide-caption">' + cap.innerHTML + '</div></div></div>');
     }
-    setupCarousel();
-    window.addEventListener('resize', setupCarousel);
+    var row1 = all.slice(0, 5).join('');
+    var row2 = all.slice(5).join('');
+    document.getElementById('foodMobRow1').innerHTML = row1 + row1;
+    document.getElementById('foodMobRow2').innerHTML = row2 + row2 + row2;
   })();
 
   // ─── MENU / CARTA ───
@@ -2197,11 +2238,11 @@
     function onScroll() {
       if (window.innerWidth > 900) return;
       var rect = pImg.parentElement.getBoundingClientRect();
-      var speed = 0.35;
-      var offset = rect.top * speed;
-      pImg.style.transform = 'translateY(' + offset + 'px)';
+      var center = rect.top + rect.height / 2 - window.innerHeight / 2;
+      pImg.style.transform = 'translateY(' + (center * 0.3) + 'px)';
     }
     window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
   })();
 
   // ─── MOBILE NAV ───
