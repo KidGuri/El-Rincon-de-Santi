@@ -427,6 +427,118 @@
     100% { transform: translateX(-50%); }
   }
 
+  /* ─── MENU / CARTA ─── */
+  .menu-section { background: var(--white); }
+  .menu-header { text-align: center; margin-bottom: 48px; }
+
+  .menu-tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0;
+    border-bottom: 2px solid var(--border);
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .menu-tab {
+    background: none;
+    border: none;
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 14px 24px;
+    cursor: pointer;
+    position: relative;
+    transition: color 0.2s;
+  }
+  .menu-tab::after {
+    content: '';
+    position: absolute;
+    bottom: -2px; left: 0; right: 0;
+    height: 2px;
+    background: var(--terra);
+    transform: scaleX(0);
+    transition: transform 0.3s;
+  }
+  .menu-tab.active { color: var(--navy); }
+  .menu-tab.active::after { transform: scaleX(1); }
+  .menu-tab:hover { color: var(--navy); }
+
+  .menu-subtabs {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-bottom: 32px;
+    flex-wrap: wrap;
+  }
+  .menu-subtab {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    font-family: 'Inter', sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    padding: 8px 20px;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  .menu-subtab.active {
+    background: var(--navy);
+    border-color: var(--navy);
+    color: var(--white);
+  }
+  .menu-subtab:hover:not(.active) { border-color: var(--navy); color: var(--navy); }
+
+  .menu-panel { display: none; }
+  .menu-panel.active { display: block; }
+
+  .menu-do-group { margin-bottom: 36px; }
+  .menu-do-title {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 16px;
+    font-weight: 500;
+    color: var(--terra);
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    margin-bottom: 16px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .menu-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(216,207,194,0.4);
+    gap: 16px;
+  }
+  .menu-item:last-child { border-bottom: none; }
+  .menu-item-info { flex: 1; min-width: 0; }
+  .menu-item-name {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--navy);
+  }
+  .menu-item-desc {
+    font-size: 12px;
+    color: var(--muted);
+    margin-top: 2px;
+    line-height: 1.4;
+  }
+  .menu-item-price {
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 15px;
+    font-weight: 500;
+    color: var(--terra);
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+
   /* ─── REVIEWS CAROUSEL ─── */
   .reviews-section {
     background: var(--navy);
@@ -907,6 +1019,7 @@
     <ul class="nav-links">
       <li><a href="#nosotros" data-i18n="nav.about">Nosotros</a></li>
       <li><a href="#especialidades" data-i18n="nav.specialties">Especialidades</a></li>
+      <li><a href="#carta" data-i18n="nav.menu">Carta</a></li>
       <li><a href="#opiniones" data-i18n="nav.reviews">Opiniones</a></li>
       <li><a href="#contacto" data-i18n="nav.contact">Contacto</a></li>
       <li><a href="tel:+34966910755" class="nav-cta" data-i18n="nav.book">Reservar</a></li>
@@ -928,6 +1041,7 @@
   </div>
   <a href="#nosotros" onclick="closeMobileNav()" data-i18n="nav.about">Nosotros</a>
   <a href="#especialidades" onclick="closeMobileNav()" data-i18n="nav.specialties">Especialidades</a>
+  <a href="#carta" onclick="closeMobileNav()" data-i18n="nav.menu">Carta</a>
   <a href="#opiniones" onclick="closeMobileNav()" data-i18n="nav.reviews">Opiniones</a>
   <a href="#contacto" onclick="closeMobileNav()" data-i18n="nav.contact">Contacto</a>
   <a href="tel:+34966910755" onclick="closeMobileNav()" style="color:var(--terra-lt);" data-i18n="nav.book_mobile">Reservar mesa</a>
@@ -1044,6 +1158,51 @@
             </div>
           </div>
         </div>
+    </div>
+  </div>
+</section>
+
+<!-- MENU / CARTA -->
+<section class="menu-section" id="carta">
+  <div class="container">
+    <div class="menu-header">
+      <span class="section-label reveal" data-i18n="menu.label">Descubre nuestros platos</span>
+      <h2 class="section-title reveal reveal-d1" data-i18n="menu.title">Nuestra <em>carta</em></h2>
+    </div>
+
+    <div class="menu-tabs reveal" id="menuTabs">
+      <button class="menu-tab active" data-menu="bodega" data-i18n="menu.tab_bodega">Bodega</button>
+      <button class="menu-tab" data-menu="entrantes" data-i18n="menu.tab_entrantes">Entrantes</button>
+      <button class="menu-tab" data-menu="arroces" data-i18n="menu.tab_arroces">Arroces</button>
+      <button class="menu-tab" data-menu="carnes" data-i18n="menu.tab_carnes">Carnes</button>
+      <button class="menu-tab" data-menu="pescados" data-i18n="menu.tab_pescados">Pescados</button>
+      <button class="menu-tab" data-menu="postres" data-i18n="menu.tab_postres">Postres</button>
+    </div>
+
+    <div class="menu-panel active" id="panel-bodega">
+      <div class="menu-subtabs" id="bodegaSubtabs">
+        <button class="menu-subtab active" data-sub="tintos" data-i18n="menu.sub_tintos">Tintos</button>
+        <button class="menu-subtab" data-sub="blancos" data-i18n="menu.sub_blancos">Blancos</button>
+        <button class="menu-subtab" data-sub="rosados" data-i18n="menu.sub_rosados">Rosados</button>
+        <button class="menu-subtab" data-sub="espumosos" data-i18n="menu.sub_espumosos">Cavas y Champagnes</button>
+      </div>
+      <div id="bodegaContent"></div>
+    </div>
+
+    <div class="menu-panel" id="panel-entrantes">
+      <p style="text-align:center;color:var(--muted);padding:40px 0;" data-i18n="menu.coming_soon">Próximamente</p>
+    </div>
+    <div class="menu-panel" id="panel-arroces">
+      <p style="text-align:center;color:var(--muted);padding:40px 0;" data-i18n="menu.coming_soon">Próximamente</p>
+    </div>
+    <div class="menu-panel" id="panel-carnes">
+      <p style="text-align:center;color:var(--muted);padding:40px 0;" data-i18n="menu.coming_soon">Próximamente</p>
+    </div>
+    <div class="menu-panel" id="panel-pescados">
+      <p style="text-align:center;color:var(--muted);padding:40px 0;" data-i18n="menu.coming_soon">Próximamente</p>
+    </div>
+    <div class="menu-panel" id="panel-postres">
+      <p style="text-align:center;color:var(--muted);padding:40px 0;" data-i18n="menu.coming_soon">Próximamente</p>
     </div>
   </div>
 </section>
@@ -1260,6 +1419,7 @@
       'nav.specialties': 'Especialidades',
       'nav.reviews': 'Opiniones',
       'nav.contact': 'Contacto',
+      'nav.menu': 'Carta',
       'nav.book': 'Reservar',
       'nav.book_mobile': 'Reservar mesa',
       'hero.label': 'Arenales del Sol · Desde 1995',
@@ -1286,6 +1446,19 @@
       'food.boquerones': 'Boquerones fritos',
       'food.chuletas': 'Chuletas con pimientos de padrón',
       'food.mejillones': 'Mejillones al vapor',
+      'menu.label': 'Descubre nuestros platos',
+      'menu.title': 'Nuestra <em>carta</em>',
+      'menu.tab_bodega': 'Bodega',
+      'menu.tab_entrantes': 'Entrantes',
+      'menu.tab_arroces': 'Arroces',
+      'menu.tab_carnes': 'Carnes',
+      'menu.tab_pescados': 'Pescados',
+      'menu.tab_postres': 'Postres',
+      'menu.sub_tintos': 'Tintos',
+      'menu.sub_blancos': 'Blancos',
+      'menu.sub_rosados': 'Rosados',
+      'menu.sub_espumosos': 'Cavas y Champagnes',
+      'menu.coming_soon': 'Próximamente',
       'reviews.label': 'Lo que dicen de nosotros',
       'reviews.title': 'Opiniones de nuestros <em>clientes</em>',
       'reviews.source': 'en Google',
@@ -1322,6 +1495,7 @@
       'nav.specialties': 'Specialties',
       'nav.reviews': 'Reviews',
       'nav.contact': 'Contact',
+      'nav.menu': 'Menu',
       'nav.book': 'Book',
       'nav.book_mobile': 'Book a table',
       'hero.label': 'Arenales del Sol · Since 1995',
@@ -1348,6 +1522,19 @@
       'food.boquerones': 'Fried anchovies',
       'food.chuletas': 'Grilled chops with padrón peppers',
       'food.mejillones': 'Steamed mussels',
+      'menu.label': 'Discover our dishes',
+      'menu.title': 'Our <em>menu</em>',
+      'menu.tab_bodega': 'Wine cellar',
+      'menu.tab_entrantes': 'Starters',
+      'menu.tab_arroces': 'Rice dishes',
+      'menu.tab_carnes': 'Meat',
+      'menu.tab_pescados': 'Fish',
+      'menu.tab_postres': 'Desserts',
+      'menu.sub_tintos': 'Red wines',
+      'menu.sub_blancos': 'White wines',
+      'menu.sub_rosados': 'Rosé wines',
+      'menu.sub_espumosos': 'Cavas & Champagnes',
+      'menu.coming_soon': 'Coming soon',
       'reviews.label': 'What they say about us',
       'reviews.title': 'What our <em>guests</em> say',
       'reviews.source': 'on Google',
@@ -1472,6 +1659,233 @@
     var slides = track.innerHTML;
     track.innerHTML = slides + slides;
   })();
+
+  // ─── MENU / CARTA ───
+  var bodegaData = {
+    tintos: [
+      { group: 'D.O. Rioja', items: [
+        ['Azpilicueta Crianza','Tempranillo, Graciano, Mazuelo',''],
+        ['La Montesa Crianza','100% Garnacha','20'],
+        ['VS Murua','90% Tempranillo, 10% Mazuelo','20'],
+        ['Amaren Selección de Viñedos','90% Tempranillo, 10% Garnacha','20'],
+        ['Muga Crianza','Coupage','24'],
+        ['Mi Lugar Crianza','90% Tempranillo, 10% Garnacha','26'],
+        ['Arienzo','Graciano, Tempranillo','17'],
+        ['Viña Ardanza Reserva','Tempranillo, Garnacha','34'],
+        ['Marqués de Riscal XR','Tempranillo, Graciano','30'],
+        ['Viña Tondonia Reserva','75% Tempranillo, 15% Garnacha, 5% Graciano, 5% Mazuelo','42'],
+        ['200 Monges','Garnacha, Graciano, Tempranillo','50'],
+        ['Bakeder Crianza','100% Tempranillo','18'],
+        ['El Jardín de la Emperatriz','90% Tempranillo, 5% Garnacha, 2% Graciano, 2% Viura, 1% Maturana','18'],
+        ['El Jardín de la Emperatriz Magnum','90% Tempranillo, 5% Garnacha, 2% Graciano','32'],
+        ['Izadi Crianza','Tempranillo','15'],
+        ['Las Pisadas','Tempranillo','16'],
+        ['Las Pisadas Magnum','Tempranillo','29'],
+        ['Tobelos','Tempranillo','16'],
+        ['Tobelos Garnacha','100% Garnacha Tinta','22'],
+        ['Excellens Cuvée','Tempranillo','15'],
+        ['Cueva de los Lobos','Tempranillo','14'],
+        ['Macán Clásico','Tempranillo','38'],
+        ['Sela Roda','Tempranillo, Graciano, Garnacha','20'],
+        ['Valencioso','Tempranillo','24'],
+        ['Baigorri de Garage','Tempranillo','40'],
+        ['Amaren Garnacha','Garnacha','40'],
+        ['El Puntido','100% Tempranillo','44'],
+        ['Alberdi Crianza','100% Tempranillo','23'],
+        ['Remelluri Reserva','Tempranillo, Garnacha, Graciano, Viura, Malvasía','30'],
+        ['Marqués de Murrieta Reserva','82% Tempranillo, 3% Garnacha, 7% Mazuelo, 8% Graciano','30'],
+        ['Marqués de Vargas Reserva','90% Tempranillo, 5% Garnacha, 5% Mazuelo','29'],
+        ['Amaren Graciano','100% Graciano','65'],
+        ['Finca El Bosque','Tempranillo','82'],
+        ['Mágico','Garnacha Tinta, Tempranillo','480']
+      ]},
+      { group: 'D.O. Ribera del Duero', items: [
+        ['El Espino Aster','100% Tinta del País','36'],
+        ['Rivendel Roble','100% Tempranillo','17'],
+        ['Rivendel 3er Año','100% Tempranillo','22'],
+        ['Admiración Selección Especial','100% Tempranillo','30'],
+        ['Protos 3er Año','100% Tempranillo','25'],
+        ['PSI','90% Tinta Fina, 10% Garnacha','45'],
+        ['Aalto','100% Tempranillo','43'],
+        ['Pesquera MXI','100% Tempranillo','29'],
+        ['Protos 27','100% Tinta del País','30'],
+        ['Tomás Postigo 3er Año','Merlot, Malbec, Cabernet Sauvignon, Tinta Fina','42'],
+        ['Pícaro del Águila','Tempranillo, Garnacha, Bobal','34'],
+        ['Ausas Interpretación','100% Tinta Fina','45'],
+        ['La Felisa','100% Tempranillo','34'],
+        ['Abadía Retuerta Selección Especial','64% Tempranillo, 15% Cabernet Sauvignon, 14% Syrah, 6% Merlot','36'],
+        ['Pago de Carraovejas','92% Tinta Fina, 5% Cabernet Sauvignon, 3% Merlot','42'],
+        ['Bosque de Matasnos','89% Tempranillo, 8% Merlot, 3% Malbec','35'],
+        ['Carroa','100% Tinto Fino','42'],
+        ['El Grajo Viejo','100% Tempranillo','80'],
+        ['Protos 27 Magnum','100% Tinta del País','65'],
+        ['Tomás Postigo 3er Año Magnum','Merlot, Malbec, Cabernet Sauvignon, Tinta Fina','90'],
+        ['Pícaro del Águila Magnum','Tempranillo, Garnacha, Bobal','80'],
+        ['Abadía Retuerta Sel. Especial Magnum','64% Tempranillo, 15% Cab. Sauvignon, 14% Syrah, 6% Merlot','75'],
+        ['Pago de Carraovejas Magnum','92% Tinta Fina, 5% Cabernet Sauvignon, 3% Merlot','90']
+      ]},
+      { group: 'D.O. Alicante', items: [
+        ['Arbui','100% Monastrell','18'],
+        ['Arbui Magnum','100% Monastrell','35'],
+        ['El Sequé','100% Monastrell','32'],
+        ['Pinoso Alta Expresión','100% Monastrell','18'],
+        ['Fuego Lento Secano Extremo','70% Monastrell, 15% Bouschet, 15% Syrah','19'],
+        ['Francisco Gómez Serrata','Petit Verdot, Merlot, Syrah, Monastrell','25'],
+        ['La Viña de Mateo Tinto','Monastrell','16'],
+        ['El Veneno','Monastrell','33'],
+        ['Fierroca','100% Giró','65'],
+        ['Triga','Cabernet Sauvignon, Monastrell','37'],
+        ['Arbui V47 Alicante Singular','100% Monastrell','34'],
+        ['Casa Agrícola','70% Monastrell, 27% Giró, 3% Alicante Bouschet','17']
+      ]},
+      { group: 'Otras Denominaciones', items: [
+        ['Mauro','Tempranillo, Syrah, Cab. Sauvignon · D.O. Castilla y León','42'],
+        ['Habla del Silencio','Tempranillo, Syrah, Cab. Sauvignon · D.O. Extremadura','19'],
+        ['Nude','100% Tintilla de Rota · D.O. Cádiz','20'],
+        ['Bobal Negro','100% Bobal · D.O. Utiel-Requena','19'],
+        ['La Casa de la Seda','100% Bobal · D.O. Utiel-Requena','21'],
+        ['Sericis Cepas Viejas','Monastrell · D.O. Jumilla','15.50'],
+        ['E.M. Finca Xaconero','90% Monastrell, 5% Shiraz, 5% Garnacha','16.50'],
+        ['Detrás da Casa Larga','55% Mencía, 35% Brancellao, 10% Espadeiro · D.O. Rías Baixas','25'],
+        ['Pazo la Cuesta','100% Brancellao · D.O. Ribeira Sacra','28'],
+        ['Pintia','Tinta de Toro · D.O. Toro','45'],
+        ['Yaso Matteria','Tinta de Toro · D.O. Toro','48'],
+        ['Vástago','90% Tinta de Toro, 6% Petit Verdot, 4% Garnacha · D.O. Toro','40'],
+        ['Alto Moncayo','Garnacha · D.O. Campo de Borja','40'],
+        ['Ferrer Bobet Vinyes Velles','86% Cariñena, 14% Garnacha · D.O. Priorat','40'],
+        ['Casa de la Ermita Viñedo Singular','100% Monastrell · D.O. Jumilla','27'],
+        ['Trapio','100% Monastrell · D.O. Yecla','20'],
+        ['Tarima Hill','Monastrell · D.O. Alicante','17'],
+        ['Les Ones','Samsó · D.O. Utiel-Requena','50']
+      ]}
+    ],
+    blancos: [
+      { group: 'Vinos Blancos', items: [
+        ['Tarsus','Verdejo','14.50'],
+        ['Pluma Blanca','Verdejo','15'],
+        ['Pluma Blanca Magnum','Verdejo','30'],
+        ['Rivendel Verdejo Viognier','50% Viognier, 50% Verdejo','18'],
+        ['Lagar de Cervera','Albariño','22'],
+        ['Ossian','Verdejo','36'],
+        ['Luar do Sil Lías','Godello','26'],
+        ['Habla del Mar','Vino submarino','25'],
+        ['Luar do Sil','Godello Valdeorras','22'],
+        ['Paco y Lola','Albariño','24'],
+        ['Protos Cuvée','Verdejo','18'],
+        ['Pazo Baión','Albariño','24'],
+        ['Botón de Gallo','Verdejo','18'],
+        ['Zárate El Palomar','Albariño','42'],
+        ['Limousin Marqués de Riscal','Verdejo','25'],
+        ['La Viña de Mateo','Sauvignon Blanc','16'],
+        ['Quintaluna','Verdejo','20'],
+        ['Elas','Albariño','20'],
+        ['Lagar de Cervera Magnum','Albariño','40'],
+        ['Diapiro Fer. Barrica','Merseguera Alicante','15'],
+        ['Rivendel Verdejo Ecológico','Verdejo','20'],
+        ['Quintaluna Ossian Magnum','Verdejo','36'],
+        ['Pazo la Cuesta','Godello sobre lías','']
+      ]}
+    ],
+    rosados: [
+      { group: 'Vinos Rosados', items: [
+        ['Izadi Larrosa','100% Garnacha','13'],
+        ['Lía de Pradorey','Tempranillo','14.50'],
+        ['Pinkgall','Blend de Garnachas','16.50'],
+        ['Marqués de Cáceres','60% Garnacha Tinta, 40% Tempranillo','16.50'],
+        ['Protos Aire','100% Tempranillo','16'],
+        ['Marqués de Riscal XR Rosé','100% Garnacha','25'],
+        ['Arzuaga Rosae','100% Tempranillo','18'],
+        ['Côté des Roses','Garnacha, Syrah, Cinsault','21'],
+        ['El Grifo Rosado de Lágrima','100% Listán Negro · D.O. Lanzarote','26'],
+        ['Nicte','100% Prieto Picudo','16'],
+        ['Maison Sainte Marguerite Symphonie','Garnacha, Cinsault','26'],
+        ['Pícaro del Águila Clarete','Tempranillo','34'],
+        ['Studio by Miraval','Cinsault, Garnacha, Rolle, Tibouren','18'],
+        ['Protos','Tempranillo','14'],
+        ['Sierra Cantabria','Garnacha, Viura, Tempranillo','13.50'],
+        ['Chivite','Tempranillo, Garnacha','15.50'],
+        ['Excellens Rosé','Garnacha, Tempranillo','12.50']
+      ]}
+    ],
+    espumosos: [
+      { group: 'Cavas', items: [
+        ['Conde de Haro Brut','Viura, Chardonnay','19'],
+        ['Conde de Haro Rosé','Garnacha Tinta','22'],
+        ['Juvé & Camps Reserva Familia','Macabeo, Xarel·lo, Parellada','28'],
+        ['Ramón Canals Reserva','Xarel·lo, Macabeo, Parellada','20'],
+        ['Juvé & Camps Milesimé','Chardonnay','32'],
+        ['Juvé & Camps Milesimé Rosé','Pinot Noir','36'],
+        ['Pere Ventura Vintage Brut','60% Xarel·lo, 40% Chardonnay','35'],
+        ['Pere Ventura Vintage Rosé','100% Pinot Noir','36'],
+        ['Gran Juvé & Camps Gran Reserva','Chardonnay, Macabeo, Parellada, Xarel·lo','40'],
+        ['Raventós y Blanc La Finca','Macabeo, Xarel·lo, Parellada','30'],
+        ['Reserva Heredad Segura Viudas','67% Macabeo, 33% Parellada','20'],
+        ['Reserva Heredad Segura Viudas Magnum','67% Macabeo, 33% Parellada','50'],
+        ['Gramona Imperial','Xarel·lo, Macabeo, Chardonnay, Parellada','28'],
+        ['Gramona Gran Cuvée de Postre','34% Xarel·lo, 33% Macabeo, 33% Parellada','19.50'],
+        ['Gramona Rosé','100% Pinot Noir','28'],
+        ['Tarima Hill Sparkling','Moscatel, Merseguera','13.50']
+      ]},
+      { group: 'Champagnes', items: [
+        ['Laurent Perrier La Cuvée','Chardonnay, Pinot Noir, Pinot Meunier','58'],
+        ['Laurent Perrier Cuvée Rosé','Pinot Noir','95'],
+        ['Laurent Perrier Heritage','55% Chardonnay, 45% Pinot Noir','85'],
+        ['Laurent Perrier Blanc de Blancs','100% Chardonnay','120'],
+        ['Ruinart Rosé','Pinot Meunier, Pinot Noir, Chardonnay','90'],
+        ['Ruinart Blanc de Blancs','100% Chardonnay','100'],
+        ['Ruinart Brut','Pinot Noir, Chardonnay','65'],
+        ['Louis Roederer Cristal','Chardonnay, Pinot Noir','320'],
+        ['Dom Pérignon','Pinot Noir, Chardonnay','250'],
+        ['Veuve Clicquot','30% Chardonnay, 50% Pinot Noir, 20% Meunier','60'],
+        ['Ayala Blanc de Blancs','100% Chardonnay','80'],
+        ['Billecart Salmon Brut Rosé','40% Chardonnay, 30% Pinot Noir, 30% Pinot Meunier','90'],
+        ['Moët & Chandon Brut Impérial','Chardonnay, Pinot Noir, Pinot Meunier','55'],
+        ['Moët & Chandon Rosé Impérial','Chardonnay, Pinot Noir, Pinot Meunier','50'],
+        ['Taittinger Brut','Chardonnay, Pinot Noir','42'],
+        ['Philipponnat Royale Réserve Brut','Pinot Noir, Chardonnay, Pinot Meunier','52'],
+        ['Charles Heidsieck Brut Réserve','Chardonnay, Pinot Noir, Meunier','55'],
+        ['Charles Heidsieck Rosé Réserve','44% Pinot Noir, 28% Meunier, 28% Chardonnay','65']
+      ]}
+    ]
+  };
+
+  function renderWineGroup(groups) {
+    var html = '';
+    for (var g = 0; g < groups.length; g++) {
+      html += '<div class="menu-do-group"><div class="menu-do-title">' + groups[g].group + '</div>';
+      for (var i = 0; i < groups[g].items.length; i++) {
+        var w = groups[g].items[i];
+        html += '<div class="menu-item"><div class="menu-item-info"><div class="menu-item-name">' + w[0] + '</div><div class="menu-item-desc">' + w[1] + '</div></div><div class="menu-item-price">' + (w[2] ? w[2] + ' €' : '') + '</div></div>';
+      }
+      html += '</div>';
+    }
+    return html;
+  }
+
+  var bodegaContainer = document.getElementById('bodegaContent');
+  var currentBodegaSub = 'tintos';
+  bodegaContainer.innerHTML = renderWineGroup(bodegaData.tintos);
+
+  document.getElementById('bodegaSubtabs').addEventListener('click', function(e) {
+    var btn = e.target.closest('.menu-subtab');
+    if (!btn) return;
+    var sub = btn.getAttribute('data-sub');
+    if (sub === currentBodegaSub) return;
+    currentBodegaSub = sub;
+    this.querySelectorAll('.menu-subtab').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    bodegaContainer.innerHTML = renderWineGroup(bodegaData[sub]);
+  });
+
+  document.getElementById('menuTabs').addEventListener('click', function(e) {
+    var btn = e.target.closest('.menu-tab');
+    if (!btn) return;
+    var menu = btn.getAttribute('data-menu');
+    this.querySelectorAll('.menu-tab').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    document.querySelectorAll('.menu-panel').forEach(function(p) { p.classList.remove('active'); });
+    document.getElementById('panel-' + menu).classList.add('active');
+  });
 
   // ─── MOBILE NAV ───
   function toggleMobileNav() {
