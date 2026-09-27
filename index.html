@@ -382,63 +382,108 @@
     background: rgba(59,49,46,0.3);
   }
 
-  /* ─── SPECIALTIES ─── */
-  .specialties { background: var(--cream); }
+  /* ─── SPECIALTIES CAROUSEL ─── */
+  .specialties { background: var(--cream); overflow: hidden; }
   .spec-header {
     text-align: center;
-    margin-bottom: 60px;
+    margin-bottom: 48px;
   }
-  .spec-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 28px;
+  .food-carousel {
+    position: relative;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 48px;
   }
-  .spec-card {
-    background: var(--white);
+  .food-carousel-track-wrap {
+    overflow: hidden;
+    border-radius: 8px;
+  }
+  .food-carousel-track {
+    display: flex;
+    transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .food-slide {
+    flex: 0 0 33.333%;
+    padding: 0 10px;
+  }
+  .food-slide-inner {
     border-radius: 8px;
     overflow: hidden;
+    background: var(--white);
     border: 1px solid var(--border);
     transition: transform 0.3s, box-shadow 0.3s;
   }
-  .spec-card:hover {
-    transform: translateY(-6px);
-    box-shadow: 0 20px 50px rgba(59,49,46,0.12);
+  .food-slide-inner:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 40px rgba(59,49,46,0.12);
   }
-  .spec-card-img {
-    aspect-ratio: 4/3;
-    overflow: hidden;
-  }
-  .spec-card-img-placeholder {
+  .food-slide img {
     width: 100%;
-    height: 100%;
+    aspect-ratio: 4/3;
+    object-fit: cover;
+    display: block;
+  }
+  .food-slide-caption {
+    padding: 16px 20px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--navy);
+    text-align: center;
+  }
+
+  .food-carousel-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--white);
+    border: 1px solid var(--border);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 40px;
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(59,49,46,0.12);
+    transition: background 0.2s, transform 0.2s;
+    z-index: 2;
   }
-  .spec-card-img-placeholder.arroces {
-    background: linear-gradient(135deg, #D4944D 0%, #C4784A 50%, #3B312E 100%);
+  .food-carousel-btn:hover {
+    background: var(--cream);
+    transform: translateY(-50%) scale(1.05);
   }
-  .spec-card-img-placeholder.mariscos {
-    background: linear-gradient(135deg, #3B312E 0%, #5A4A44 50%, #C4784A 100%);
+  .food-carousel-btn svg {
+    width: 18px;
+    height: 18px;
+    stroke: var(--navy);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
   }
-  .spec-card-img-placeholder.postres {
-    background: linear-gradient(135deg, #C4784A 0%, #D4944D 50%, #3B312E 100%);
+  .food-carousel-prev { left: 4px; }
+  .food-carousel-next { right: 4px; }
+
+  .food-carousel-dots {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 28px;
   }
-  .spec-card-body {
-    padding: 24px 28px;
+  .food-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--border);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: background 0.3s, transform 0.3s;
   }
-  .spec-card-title {
-    font-family: 'Cormorant Garamond', serif;
-    font-size: 24px;
-    font-weight: 500;
-    color: var(--navy);
-    margin-bottom: 10px;
-  }
-  .spec-card-desc {
-    font-size: 14px;
-    line-height: 1.7;
-    color: var(--muted);
+  .food-dot.active {
+    background: var(--terra);
+    transform: scale(1.25);
   }
 
   /* ─── REVIEWS CAROUSEL ─── */
@@ -608,20 +653,12 @@
     gap: 80px;
     align-items: center;
   }
-  .exp-img-placeholder {
+  .exp-img {
     width: 100%;
-    aspect-ratio: 4/3;
+    aspect-ratio: 3/2;
+    object-fit: cover;
     border-radius: 4px;
-    background: linear-gradient(135deg, #3B312E 0%, #3B312E 50%, #C4784A 100%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .exp-img-placeholder span {
-    color: rgba(255,255,255,0.25);
-    font-size: 13px;
-    letter-spacing: 2px;
-    text-transform: uppercase;
+    display: block;
   }
   .exp-text .section-body { margin-top: 20px; }
 
@@ -910,6 +947,11 @@
     .hero-logo { max-width: 360px; }
     .hero-subtitle { margin-bottom: 32px; }
 
+    .food-slide { flex: 0 0 50%; }
+    .food-carousel { padding: 0 24px; }
+    .food-carousel-prev { left: 0; }
+    .food-carousel-next { right: 0; }
+
     .parallax-divider { height: 240px; }
     .parallax-divider-img { background-attachment: scroll; }
   }
@@ -918,6 +960,7 @@
     .review-card { width: 280px; padding: 20px; }
     .review-card .review-text { font-size: 13px; }
     .hero-logo { max-width: 280px; }
+    .food-slide { flex: 0 0 100%; }
     .parallax-divider { height: 180px; }
   }
 </style>
@@ -994,9 +1037,7 @@
         </div>
       </div>
       <div class="about-img-wrap reveal reveal-d2">
-        <div class="about-img-placeholder">
-          <span>Foto del restaurante</span>
-        </div>
+        <img src="img/food-pulpo.webp" alt="Pulpo a la gallega" style="width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:4px;display:block;">
         <div class="about-img-deco"></div>
       </div>
     </div>
@@ -1015,34 +1056,72 @@
       <span class="section-label reveal" data-i18n="spec.label">Lo que nos define</span>
       <h2 class="section-title reveal reveal-d1" data-i18n="spec.title">Nuestras <em>especialidades</em></h2>
     </div>
-    <div class="spec-grid">
-      <div class="spec-card reveal">
-        <div class="spec-card-img">
-          <div class="spec-card-img-placeholder arroces">🥘</div>
-        </div>
-        <div class="spec-card-body">
-          <h3 class="spec-card-title" data-i18n="spec.rice_title">Arroces y Calderos</h3>
-          <p class="spec-card-desc" data-i18n="spec.rice_desc">El alma de nuestra cocina. Arroces secos, melosos y caldosos elaborados con caldo casero, producto fresco y todo el saber de la tradición levantina. Nuestros calderos son una experiencia en sí misma.</p>
+    <div class="food-carousel reveal" id="foodCarousel">
+      <div class="food-carousel-track-wrap">
+        <div class="food-carousel-track" id="foodTrack">
+          <div class="food-slide">
+            <div class="food-slide-inner">
+              <img src="img/food-arroz.webp" alt="Arroz con gambas" loading="lazy">
+              <div class="food-slide-caption" data-i18n="food.arroz">Arroz con gambas</div>
+            </div>
+          </div>
+          <div class="food-slide">
+            <div class="food-slide-inner">
+              <img src="img/food-calamares.webp" alt="Calamares fritos" loading="lazy">
+              <div class="food-slide-caption" data-i18n="food.calamares">Calamares fritos</div>
+            </div>
+          </div>
+          <div class="food-slide">
+            <div class="food-slide-inner">
+              <img src="img/food-arroz-negro.webp" alt="Arroz negro" loading="lazy">
+              <div class="food-slide-caption" data-i18n="food.arroz_negro">Arroz negro</div>
+            </div>
+          </div>
+          <div class="food-slide">
+            <div class="food-slide-inner">
+              <img src="img/food-pulpo.webp" alt="Pulpo a la gallega" loading="lazy">
+              <div class="food-slide-caption" data-i18n="food.pulpo">Pulpo a la gallega</div>
+            </div>
+          </div>
+          <div class="food-slide">
+            <div class="food-slide-inner">
+              <img src="img/food-fideua.webp" alt="Fideuá de mariscos" loading="lazy">
+              <div class="food-slide-caption" data-i18n="food.fideua">Fideuá de mariscos</div>
+            </div>
+          </div>
+          <div class="food-slide">
+            <div class="food-slide-inner">
+              <img src="img/food-zamburinas.webp" alt="Zamburiñas a la plancha" loading="lazy">
+              <div class="food-slide-caption" data-i18n="food.zamburinas">Zamburiñas a la plancha</div>
+            </div>
+          </div>
+          <div class="food-slide">
+            <div class="food-slide-inner">
+              <img src="img/food-boquerones.webp" alt="Boquerones fritos" loading="lazy">
+              <div class="food-slide-caption" data-i18n="food.boquerones">Boquerones fritos</div>
+            </div>
+          </div>
+          <div class="food-slide">
+            <div class="food-slide-inner">
+              <img src="img/food-chuletas.webp" alt="Chuletas con pimientos de padrón" loading="lazy">
+              <div class="food-slide-caption" data-i18n="food.chuletas">Chuletas con pimientos de padrón</div>
+            </div>
+          </div>
+          <div class="food-slide">
+            <div class="food-slide-inner">
+              <img src="img/food-mejillones.webp" alt="Mejillones al vapor" loading="lazy">
+              <div class="food-slide-caption" data-i18n="food.mejillones">Mejillones al vapor</div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="spec-card reveal reveal-d1">
-        <div class="spec-card-img">
-          <div class="spec-card-img-placeholder mariscos">🦐</div>
-        </div>
-        <div class="spec-card-body">
-          <h3 class="spec-card-title" data-i18n="spec.seafood_title">Mariscos y Pescados</h3>
-          <p class="spec-card-desc" data-i18n="spec.seafood_desc">Del Mediterráneo a tu mesa. Gambas, sepia, calamar, dorada y mucho más, preparados a la plancha, al horno o en cazuela con el respeto que el buen producto merece.</p>
-        </div>
-      </div>
-      <div class="spec-card reveal reveal-d2">
-        <div class="spec-card-img">
-          <div class="spec-card-img-placeholder postres">🍰</div>
-        </div>
-        <div class="spec-card-body">
-          <h3 class="spec-card-title" data-i18n="spec.desserts_title">Postres Caseros y Gin Tonics</h3>
-          <p class="spec-card-desc" data-i18n="spec.desserts_desc">El broche perfecto. Nuestros postres caseros son legendarios en la zona, y nuestros Gin Tonics están preparados con las mejores ginebras premium y tónicas artesanales.</p>
-        </div>
-      </div>
+      <button class="food-carousel-btn food-carousel-prev" onclick="foodCarouselMove(-1)" aria-label="Anterior">
+        <svg viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <button class="food-carousel-btn food-carousel-next" onclick="foodCarouselMove(1)" aria-label="Siguiente">
+        <svg viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+      </button>
+      <div class="food-carousel-dots" id="foodDots"></div>
     </div>
   </div>
 </section>
@@ -1082,9 +1161,7 @@
   <div class="container">
     <div class="exp-inner">
       <div class="reveal">
-        <div class="exp-img-placeholder">
-          <span>Foto terraza</span>
-        </div>
+        <img src="img/interior.webp" alt="Interior del restaurante" class="exp-img">
       </div>
       <div class="exp-text">
         <span class="section-label reveal" data-i18n="exp.label">La experiencia</span>
@@ -1278,12 +1355,15 @@
       'about.pill5': 'Junto a la playa',
       'spec.label': 'Lo que nos define',
       'spec.title': 'Nuestras <em>especialidades</em>',
-      'spec.rice_title': 'Arroces y Calderos',
-      'spec.rice_desc': 'El alma de nuestra cocina. Arroces secos, melosos y caldosos elaborados con caldo casero, producto fresco y todo el saber de la tradición levantina. Nuestros calderos son una experiencia en sí misma.',
-      'spec.seafood_title': 'Mariscos y Pescados',
-      'spec.seafood_desc': 'Del Mediterráneo a tu mesa. Gambas, sepia, calamar, dorada y mucho más, preparados a la plancha, al horno o en cazuela con el respeto que el buen producto merece.',
-      'spec.desserts_title': 'Postres Caseros y Gin Tonics',
-      'spec.desserts_desc': 'El broche perfecto. Nuestros postres caseros son legendarios en la zona, y nuestros Gin Tonics están preparados con las mejores ginebras premium y tónicas artesanales.',
+      'food.arroz': 'Arroz con gambas',
+      'food.calamares': 'Calamares fritos',
+      'food.arroz_negro': 'Arroz negro',
+      'food.pulpo': 'Pulpo a la gallega',
+      'food.fideua': 'Fideuá de mariscos',
+      'food.zamburinas': 'Zamburiñas a la plancha',
+      'food.boquerones': 'Boquerones fritos',
+      'food.chuletas': 'Chuletas con pimientos de padrón',
+      'food.mejillones': 'Mejillones al vapor',
       'reviews.label': 'Lo que dicen de nosotros',
       'reviews.title': 'Opiniones de nuestros <em>clientes</em>',
       'reviews.source': 'en Google',
@@ -1337,12 +1417,15 @@
       'about.pill5': 'Beachfront',
       'spec.label': 'What defines us',
       'spec.title': 'Our <em>specialties</em>',
-      'spec.rice_title': 'Rice & Fish Stews',
-      'spec.rice_desc': 'The soul of our kitchen. Dry, creamy and brothy rice dishes made with homemade stock, fresh produce and all the wisdom of the Levantine tradition. Our calderos are an experience in themselves.',
-      'spec.seafood_title': 'Seafood & Fish',
-      'spec.seafood_desc': 'From the Mediterranean to your table. Prawns, cuttlefish, squid, sea bream and much more, prepared grilled, baked or stewed with the respect fine produce deserves.',
-      'spec.desserts_title': 'Homemade Desserts & Gin Tonics',
-      'spec.desserts_desc': 'The perfect finish. Our homemade desserts are legendary in the area, and our Gin & Tonics are crafted with the finest premium gins and artisanal tonics.',
+      'food.arroz': 'Prawn rice',
+      'food.calamares': 'Fried calamari',
+      'food.arroz_negro': 'Black rice',
+      'food.pulpo': 'Galician-style octopus',
+      'food.fideua': 'Seafood fideuá',
+      'food.zamburinas': 'Grilled scallops',
+      'food.boquerones': 'Fried anchovies',
+      'food.chuletas': 'Grilled chops with padrón peppers',
+      'food.mejillones': 'Steamed mussels',
       'reviews.label': 'What they say about us',
       'reviews.title': 'What our <em>guests</em> say',
       'reviews.source': 'on Google',
@@ -1460,6 +1543,74 @@
     });
   }, { threshold: 0.12 });
   revealEls.forEach(function(el) { observer.observe(el); });
+
+  // ─── FOOD CAROUSEL ───
+  var foodIndex = 0;
+  var foodSlidesPerView = 3;
+  var foodTrack = document.getElementById('foodTrack');
+  var foodSlides = foodTrack.querySelectorAll('.food-slide');
+  var foodTotal = foodSlides.length;
+  var foodDotsContainer = document.getElementById('foodDots');
+
+  function getFoodSlidesPerView() {
+    if (window.innerWidth <= 600) return 1;
+    if (window.innerWidth <= 900) return 2;
+    return 3;
+  }
+
+  function getFoodMaxIndex() {
+    return Math.max(0, foodTotal - foodSlidesPerView);
+  }
+
+  function updateFoodCarousel() {
+    var pct = (foodIndex * 100) / foodSlidesPerView;
+    foodTrack.style.transform = 'translateX(-' + pct + '%)';
+    var dots = foodDotsContainer.querySelectorAll('.food-dot');
+    dots.forEach(function(d, i) { d.classList.toggle('active', i === foodIndex); });
+  }
+
+  function buildFoodDots() {
+    foodDotsContainer.innerHTML = '';
+    var max = getFoodMaxIndex();
+    for (var i = 0; i <= max; i++) {
+      var dot = document.createElement('button');
+      dot.className = 'food-dot' + (i === foodIndex ? ' active' : '');
+      dot.setAttribute('aria-label', 'Slide ' + (i + 1));
+      dot.onclick = (function(idx) { return function() { foodIndex = idx; updateFoodCarousel(); }; })(i);
+      foodDotsContainer.appendChild(dot);
+    }
+  }
+
+  function foodCarouselMove(dir) {
+    foodIndex = Math.max(0, Math.min(foodIndex + dir, getFoodMaxIndex()));
+    updateFoodCarousel();
+  }
+
+  function onFoodResize() {
+    var newPerView = getFoodSlidesPerView();
+    if (newPerView !== foodSlidesPerView) {
+      foodSlidesPerView = newPerView;
+      foodIndex = Math.min(foodIndex, getFoodMaxIndex());
+      buildFoodDots();
+    }
+    updateFoodCarousel();
+  }
+
+  foodSlidesPerView = getFoodSlidesPerView();
+  buildFoodDots();
+  updateFoodCarousel();
+  window.addEventListener('resize', onFoodResize);
+
+  // touch swipe
+  (function() {
+    var startX = 0;
+    var wrap = document.querySelector('.food-carousel-track-wrap');
+    wrap.addEventListener('touchstart', function(e) { startX = e.touches[0].clientX; }, { passive: true });
+    wrap.addEventListener('touchend', function(e) {
+      var diff = startX - e.changedTouches[0].clientX;
+      if (Math.abs(diff) > 40) foodCarouselMove(diff > 0 ? 1 : -1);
+    }, { passive: true });
+  })();
 
   // ─── MOBILE NAV ───
   function toggleMobileNav() {
