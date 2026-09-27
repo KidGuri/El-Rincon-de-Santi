@@ -1238,19 +1238,24 @@
     </div>
 
     <div class="menu-panel" id="panel-entrantes">
-      <p style="text-align:center;color:var(--muted);padding:40px 0;" data-i18n="menu.coming_soon">Próximamente</p>
+      <div class="menu-subtabs" id="entrantesSubtabs">
+        <button class="menu-subtab active" data-sub="para_empezar" data-i18n="menu.sub_para_empezar">Para empezar</button>
+        <button class="menu-subtab" data-sub="mariscos" data-i18n="menu.sub_mariscos">Mariscos</button>
+        <button class="menu-subtab" data-sub="frituras" data-i18n="menu.sub_frituras">Frituras</button>
+      </div>
+      <div id="entrantesContent"></div>
     </div>
     <div class="menu-panel" id="panel-arroces">
-      <p style="text-align:center;color:var(--muted);padding:40px 0;" data-i18n="menu.coming_soon">Próximamente</p>
+      <div id="arrocesContent"></div>
     </div>
     <div class="menu-panel" id="panel-carnes">
-      <p style="text-align:center;color:var(--muted);padding:40px 0;" data-i18n="menu.coming_soon">Próximamente</p>
+      <div id="carnesContent"></div>
     </div>
     <div class="menu-panel" id="panel-pescados">
-      <p style="text-align:center;color:var(--muted);padding:40px 0;" data-i18n="menu.coming_soon">Próximamente</p>
+      <div id="pescadosContent"></div>
     </div>
     <div class="menu-panel" id="panel-postres">
-      <p style="text-align:center;color:var(--muted);padding:40px 0;" data-i18n="menu.coming_soon">Próximamente</p>
+      <div id="postresContent"></div>
     </div>
     </div>
     <div class="menu-show-more" id="menuShowMore">
@@ -1513,6 +1518,9 @@
       'menu.sub_blancos': 'Blancos',
       'menu.sub_rosados': 'Rosados',
       'menu.sub_espumosos': 'Cavas y Champagnes',
+      'menu.sub_para_empezar': 'Para empezar',
+      'menu.sub_mariscos': 'Mariscos',
+      'menu.sub_frituras': 'Frituras',
       'menu.coming_soon': 'Próximamente',
       'menu.show_more': 'Ver carta completa',
       'menu.show_less': 'Ver menos',
@@ -1591,6 +1599,9 @@
       'menu.sub_blancos': 'White wines',
       'menu.sub_rosados': 'Rosé wines',
       'menu.sub_espumosos': 'Cavas & Champagnes',
+      'menu.sub_para_empezar': 'Starters',
+      'menu.sub_mariscos': 'Seafood',
+      'menu.sub_frituras': 'Fried dishes',
       'menu.coming_soon': 'Coming soon',
       'menu.show_more': 'See full menu',
       'menu.show_less': 'Show less',
@@ -1950,6 +1961,189 @@
     bodegaContainer.innerHTML = renderWineGroup(bodegaData[sub]);
     checkMenuOverflow();
   });
+
+  // ─── ENTRANTES DATA ───
+  var entrantesData = {
+    para_empezar: [
+      { group: 'Para Empezar', items: [
+        ['Pan, tomate y ali-oli','Pan, tomate y alioli por persona','3.50'],
+        ['Pan sin gluten','Pan sin gluten (aprox. 10 min)','3'],
+        ['Nuestra marinera con anchoa triple 0','Marinera de la casa con anchoas premium','4.50'],
+        ['Nuestras anchoas triple 0','Anchoas premium, 6 uds.','16'],
+        ['Mejillones en escabeche con sus chips','Mejillones en escabeche con chips','15'],
+        ['Lata berberechos premium','Berberechos premium 25/35 uds.','25'],
+        ['Caviar Zar Siberian','Caviar siberiano, 30g','50'],
+        ['Tomate de temporada con capellán a la llama','Tomate, cebolla, aceitunas, capellán a la llama','11 / 15'],
+        ['Tomate de temporada con ventresca de atún','Tomate, cebolla, aceitunas, ventresca en AOVE','12 / 18'],
+        ['Tomate de temporada con salazones alicantinos','Tomate con salazones de Alicante','13 / 20'],
+        ['Nuestro dúo de ensaladillas','Ensaladilla rusa y de merluza','12'],
+        ['Salmorejo','Salmorejo (solo temporada)','8'],
+        ['Torrezno confitado de cerdo','Torrezno de cerdo confitado','14'],
+        ['Cecina de Wagyu Ushido','Cecina de Wagyu, 100g','26'],
+        ['Melón con jamón ibérico','Melón con jamón ibérico','13'],
+        ['Hueva de mújol','Hueva de mújol, 100g','13'],
+        ['Mojama de atún de almadraba','Mojama de atún, 100g','10'],
+        ['Gildas caseras','Gildas caseras, por unidad','2.75'],
+        ['Anchoas del Cantábrico','Anchoas del Cantábrico, 6 uds.','13'],
+        ['Berberechos grandes','Berberechos grandes','18'],
+        ['Berberechos premium','Berberechos premium 15/25 uds.','26'],
+        ['Mejillones premium mariscadora','Mejillones premium 6/8 uds.','14'],
+        ['Caviar Per Sé Naccarii Gold','Caviar, 20g','48'],
+        ['Caviar Per Sé Baerii Black','Caviar estilo iraní, 30g','42']
+      ]}
+    ],
+    mariscos: [
+      { group: 'Mariscos', items: [
+        ['Almejas gallegas a nuestra marinera','Almejas gallegas a la marinera','19'],
+        ['Gamba roja extra de nuestra bahía','Gamba roja de la bahía, 100g','20'],
+        ['Quisquilla hervida de Santa Pola','Quisquilla hervida, 100g (mín. 150g)','14.50'],
+        ['Cigala de tronco plancha','Cigala a la plancha, 100g','16'],
+        ['Pulpo de roca crujiente','Sobre lecho de patata y pimentón de la Vera','22'],
+        ['Calamar de potera con su tinta','Calamar a la plancha con su tinta','20'],
+        ['Langosta a la ibicenca','Con huevo frito, por encargo, por kg','120'],
+        ['Bogavante azul con huevo frito','Por encargo, por kg','100'],
+        ['Mejillones de la Ría de Noia al vapor','Mejillones al vapor','12.50'],
+        ['Vieiras seleccionadas','Por unidad','3.50'],
+        ['Cazuela de gambas al ajillo','Gambas al ajillo en cazuela','18'],
+        ['Sepionet de la bahía','Sepionet de la bahía','18'],
+        ['Huevas de merluza a la plancha','Huevas de merluza a la plancha','16'],
+        ['Berberechos de la ría al vapor','Berberechos al vapor','19.50'],
+        ['Gamba blanca hervida','Gamba blanca hervida, 100g (mín. 150g)','12.50'],
+        ['Calamar nacional a la andaluza','Calamar a la andaluza','17'],
+        ['Pescados fritos de la lonja','Pescados fritos del día','11'],
+        ['Mejillones a la marinera','Mejillones a la marinera','12'],
+        ['Berberechos extra Ría de Aurosa','Berberechos premium al vapor','16'],
+        ['Navajas gallegas Ría Muros y Noia','Navajas gallegas, por unidad','3'],
+        ['Coquina de Isla Cristina al Tío Pepe','Coquinas al Tío Pepe, aprox. 250g','14']
+      ]}
+    ],
+    frituras: [
+      { group: 'Frituras', items: [
+        ['Buñuelos de merluza','Ración 4 unidades','10'],
+        ['Croquetas cremosas de jamón 100% ibérico','Ración 4 unidades','11'],
+        ['Calamar nacional a la andaluza','Calamar a la andaluza','18'],
+        ['Boquerones fritos de la bahía','Boquerones fritos','14'],
+        ['Ensalada noruega','Mezclum, cherry, vinagreta, frutos secos, salmón ahumado','16.50'],
+        ['Zamburiñas tigre','Zamburiñas tigre, por unidad','3.50'],
+        ['Queso curado oveja trufado','Queso de oveja con trufa, 100g','10'],
+        ['Pulpo de roca crujiente','Sobre lecho de patata y pimentón','18.50'],
+        ['Pulpo brasa','Pulpo a la brasa','20'],
+        ['Calamar de potera con su tinta','Calamar con tinta, 350-400g','18.50'],
+        ['Hueva de mújol','Hueva de mújol, 100g','12'],
+        ['Mojama de atún de almadraba','Mojama de atún, 100g','10'],
+        ['Bonito seco en salazón','Bonito en salazón, 100g','7'],
+        ['Croquetas caseras de gamba roja','Croquetas de gamba roja, por unidad','2'],
+        ['Queso curado añejo leche cruda oveja','Queso curado de oveja, 100g','9.50'],
+        ['Pan y servicio','Pan y servicio','2'],
+        ['Pan sin gluten','Pan sin gluten (aprox. 10 min)','3'],
+        ['Tarro de tomate natural o ali-oli','Tarro de tomate o alioli','1.50']
+      ]}
+    ]
+  };
+
+  var entrantesContainer = document.getElementById('entrantesContent');
+  var currentEntrantesSub = 'para_empezar';
+  entrantesContainer.innerHTML = renderWineGroup(entrantesData.para_empezar);
+
+  document.getElementById('entrantesSubtabs').addEventListener('click', function(e) {
+    var btn = e.target.closest('.menu-subtab');
+    if (!btn) return;
+    var sub = btn.getAttribute('data-sub');
+    if (sub === currentEntrantesSub) return;
+    currentEntrantesSub = sub;
+    this.querySelectorAll('.menu-subtab').forEach(function(b) { b.classList.remove('active'); });
+    btn.classList.add('active');
+    entrantesContainer.innerHTML = renderWineGroup(entrantesData[sub]);
+    checkMenuOverflow();
+  });
+
+  // ─── ARROCES DATA ───
+  var arrocesData = [
+    { group: 'Arroces y Fideuás', items: [
+      ['Arroz del señoret','Calamar, sepia, atún y gamba pelada','19'],
+      ['Arroz con bogavante','Gamba pelada y ½ bogavante p/p','25'],
+      ['Arroz con langosta','Gamba pelada y ½ langosta p/p','32'],
+      ['Fideuá del señoret','Gamba pelada, atún, sepia y calamar','19'],
+      ['Arroz de marisco','Calamar, sepia, atún, langostino, gambas rojas y mejillones','22'],
+      ['Fideuá de marisco','Calamar, sepia, atún, langostino, gambas rojas y mejillones','22'],
+      ['Fideuá de pulpo','Calamar, sepia, atún, pulpo, pimiento rojo y gambas','21'],
+      ['Arroz meloso de rape','Caldo de pescado con rape, atún y camarones','22'],
+      ['Arroz negro con sepionet y ajos tiernos','Calamar, sepia, atún, sepionet, ajos tiernos y gamba pelada','20'],
+      ['Arroz meloso con langosta','Gamba roja pelada y ½ langosta roja p/p','26'],
+      ['Arroz meloso de rape y gamba roja','Gamba roja pelada, cebolla, ajos tiernos y rape','18'],
+      ['Arroz meloso de pulpo','Gamba roja pelada, cebolla, ajos tiernos y pulpo de roca','16'],
+      ['Fideuá de bogavante','Gamba roja pelada y ½ bogavante p/p','22'],
+      ['Arroz con conejo y caracoles','Con conejo y caracoles','17'],
+      ['Arroz de magra y verduras','Con magra y verduras','17']
+    ]},
+    { group: 'Por Encargo (45 min)', items: [
+      ['Caldero de gallina','Elaboración 45 minutos','30'],
+      ['Gazpacho marinero','Elaboración 45 minutos','22'],
+      ['Caldero de mero o dentón','Elaboración 45 minutos','30'],
+      ['Gazpacho manchego de conejo','Con conejo','18'],
+      ['Caldereta de langosta roja salvaje','Por encargo','30']
+    ]},
+    { group: '', items: [
+      ['Tarro de ali-oli casero','Ali-oli casero','1.50']
+    ]}
+  ];
+  document.getElementById('arrocesContent').innerHTML = renderWineGroup(arrocesData);
+
+  // ─── CARNES DATA ───
+  var carnesData = [
+    { group: 'Carnes a la Parrilla', items: [
+      ['Solomillo de Vaca Rubia Marela a la parrilla','Aprox. 250g','25'],
+      ['Solomillo de Vaca Rubia Marela con ajos tiernos y tomate seco','Aprox. 250g','26'],
+      ['Solomillo de Vaca Rubia Marela al foie de Jules','Con reducción de P.X y base de manzana','29'],
+      ['Solomillo de Vaca Marela Nacional a la parrilla','Aprox. 250g','24'],
+      ['Chuletón de Vaca Rubia Marela','Chuletón de vaca a la parrilla','65 €/kg'],
+      ['Entrecot Nacional de Vaca Superior','Maduración 60 días, 350g','28'],
+      ['Chuletón de Vaca Vieja Premium','800-900g, maduración mín. 30 días','35'],
+      ['Chuleta T-Bone','Maduración mínimo 45 días','60 €/kg'],
+      ['Presa Angus','Corte de presa Angus','23'],
+      ['Chuletas de Cordero D.O. La Mancha','Chuletas de cordero manchego','20']
+    ]}
+  ];
+  document.getElementById('carnesContent').innerHTML = renderWineGroup(carnesData);
+
+  // ─── PESCADOS DATA ───
+  var pescadosData = [
+    { group: 'Pescados', items: [
+      ['Pescado de la lonja de Santa Pola al horno','Lubina, sargo, pargo, dorada, rodaballo, merluza, corvina… 400-500g','21'],
+      ['Pescado del día según lonja al horno','400-450g, selección del día','24'],
+      ['Rustidera de pescado de lonja','400-450g, por encargo','28'],
+      ['Ventresca de atún de ijada Balfegó','Ventresca de atún premium','26'],
+      ['Gallo Pedro Rincón de Santi','Mínimo 2 comensales, por ración','26'],
+      ['Chuleta de atún rojo Balfegó «Parpatana»','Chuleta de atún rojo premium','22'],
+      ['Lenguado de la bahía de Santa Pola','Lenguado de la bahía','22'],
+      ['Dentón, mero, besugo o virrey salvaje','Pescado salvaje, por encargo','80 €/kg']
+    ]}
+  ];
+  document.getElementById('pescadosContent').innerHTML = renderWineGroup(pescadosData);
+
+  // ─── POSTRES DATA ───
+  var postresData = [
+    { group: 'Postres', items: [
+      ['Flan de huevo de la Yaya Mª José','Flan casero','5'],
+      ['Las auténticas milhojas de crema','Milhojas de crema','8'],
+      ['Tarta de queso New York','Tarta de queso estilo New York','7'],
+      ['Tiramisú casero','Tiramisú casero','6.50'],
+      ['Auténtico helado de turrón','2 bolas','6.50'],
+      ['Tarta de la abuela','Chocolate negro 70%','7'],
+      ['Fruta de temporada','Fruta de temporada','5.50'],
+      ['Helado de mantecado','Helado de mantecado','6'],
+      ['Melón o sandía','De temporada','4'],
+      ['Bola de turrón o mantecado','Bola individual','3']
+    ]},
+    { group: 'Vinos de Postre', items: [
+      ['Boca Negra Dulce','Copa / Botella 50cl','3 / 14'],
+      ['Serrata Moscatel Dulce','Copa / Botella 50cl','3 / 14'],
+      ['Fondillón Tesoro de Villena 1972','Copa / Botella 75cl','6 / 45'],
+      ['Brotons Gran Fondillón Reserva 1964','Copa / Botella 75cl','7 / 50'],
+      ['PX Perla Azul','Copa / Botella 75cl','5 / 40']
+    ]}
+  ];
+  document.getElementById('postresContent').innerHTML = renderWineGroup(postresData);
 
   document.getElementById('menuTabs').addEventListener('click', function(e) {
     var btn = e.target.closest('.menu-tab');
