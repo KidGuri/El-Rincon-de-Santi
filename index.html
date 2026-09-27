@@ -1923,7 +1923,21 @@
 
   var bodegaContainer = document.getElementById('bodegaContent');
   var currentBodegaSub = 'tintos';
+  var menuCollapse = document.getElementById('menuCollapse');
+  var menuShowMore = document.getElementById('menuShowMore');
+
+  function checkMenuOverflow() {
+    menuCollapse.classList.remove('expanded');
+    var btn = document.getElementById('menuExpandBtn');
+    btn.querySelector('span:first-child').style.display = 'inline';
+    btn.querySelector('span:last-child').style.display = 'none';
+    var overflows = menuCollapse.scrollHeight > menuCollapse.clientHeight + 2;
+    menuShowMore.style.display = overflows ? 'flex' : 'none';
+    menuCollapse.style.maxHeight = overflows ? '' : 'none';
+  }
+
   bodegaContainer.innerHTML = renderWineGroup(bodegaData.tintos);
+  checkMenuOverflow();
 
   document.getElementById('bodegaSubtabs').addEventListener('click', function(e) {
     var btn = e.target.closest('.menu-subtab');
@@ -1934,7 +1948,7 @@
     this.querySelectorAll('.menu-subtab').forEach(function(b) { b.classList.remove('active'); });
     btn.classList.add('active');
     bodegaContainer.innerHTML = renderWineGroup(bodegaData[sub]);
-    document.getElementById('menuCollapse').classList.remove('expanded');
+    checkMenuOverflow();
   });
 
   document.getElementById('menuTabs').addEventListener('click', function(e) {
@@ -1945,14 +1959,12 @@
     btn.classList.add('active');
     document.querySelectorAll('.menu-panel').forEach(function(p) { p.classList.remove('active'); });
     document.getElementById('panel-' + menu).classList.add('active');
-    var mc = document.getElementById('menuCollapse');
-    mc.classList.remove('expanded');
+    checkMenuOverflow();
   });
 
   document.getElementById('menuExpandBtn').addEventListener('click', function() {
-    var mc = document.getElementById('menuCollapse');
-    mc.classList.toggle('expanded');
-    if (mc.classList.contains('expanded')) {
+    menuCollapse.classList.toggle('expanded');
+    if (menuCollapse.classList.contains('expanded')) {
       this.querySelector('span:first-child').style.display = 'none';
       this.querySelector('span:last-child').style.display = 'inline';
     } else {
