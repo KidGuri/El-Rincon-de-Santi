@@ -1040,17 +1040,29 @@
     .hero-logo { max-width: 360px; }
     .hero-subtitle { margin-bottom: 32px; }
 
-    .food-slide { width: 260px; }
-
     .parallax-divider { height: 240px; }
     .parallax-divider-img { background-attachment: scroll; }
+
+    .food-carousel-track {
+      flex-wrap: wrap;
+      width: 100% !important;
+      animation: none !important;
+      gap: 10px;
+      justify-content: center;
+    }
+    .food-slide {
+      width: calc(50% - 5px);
+      flex-shrink: 0;
+    }
+    .food-slide-caption { font-size: 13px; padding: 10px 8px; }
+    .food-slide img { aspect-ratio: 1/1; }
+    .food-slide-inner:hover { transform: none; box-shadow: none; }
   }
 
   @media (max-width: 600px) {
     .review-card { width: 280px; padding: 20px; }
     .review-card .review-text { font-size: 13px; }
     .hero-logo { max-width: 280px; }
-    .food-slide { width: 240px; }
     .parallax-divider { height: 180px; }
   }
 </style>
@@ -1723,11 +1735,21 @@
   }, { threshold: 0.12 });
   revealEls.forEach(function(el) { observer.observe(el); });
 
-  // ─── FOOD CAROUSEL (infinite) ───
+  // ─── FOOD CAROUSEL (infinite on desktop, grid on mobile) ───
   (function() {
     var track = document.getElementById('foodTrack');
-    var slides = track.innerHTML;
-    track.innerHTML = slides + slides;
+    var original = track.innerHTML;
+    function setupCarousel() {
+      if (window.innerWidth > 900) {
+        track.innerHTML = original + original;
+        track.style.animation = '';
+      } else {
+        track.innerHTML = original;
+        track.style.animation = 'none';
+      }
+    }
+    setupCarousel();
+    window.addEventListener('resize', setupCarousel);
   })();
 
   // ─── MENU / CARTA ───
@@ -2167,6 +2189,20 @@
       document.getElementById('carta').scrollIntoView({ behavior: 'smooth' });
     }
   });
+
+  // ─── MOBILE PARALLAX ───
+  (function() {
+    var pImg = document.querySelector('.parallax-divider-img');
+    if (!pImg) return;
+    function onScroll() {
+      if (window.innerWidth > 900) return;
+      var rect = pImg.parentElement.getBoundingClientRect();
+      var speed = 0.35;
+      var offset = rect.top * speed;
+      pImg.style.transform = 'translateY(' + offset + 'px)';
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+  })();
 
   // ─── MOBILE NAV ───
   function toggleMobileNav() {
