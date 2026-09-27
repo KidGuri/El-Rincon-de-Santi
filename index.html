@@ -495,7 +495,49 @@
   .menu-panel { display: none; }
   .menu-panel.active { display: block; }
 
-  .menu-do-group { margin-bottom: 36px; }
+  .menu-collapse {
+    position: relative;
+    max-height: 150vh;
+    overflow: hidden;
+    transition: max-height 0.6s ease;
+  }
+  .menu-collapse.expanded { max-height: none; }
+  .menu-collapse:not(.expanded)::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 120px;
+    background: linear-gradient(to bottom, transparent, var(--white));
+    pointer-events: none;
+  }
+  .menu-show-more {
+    display: flex;
+    justify-content: center;
+    margin-top: 8px;
+  }
+  .menu-collapse.expanded + .menu-show-more .menu-expand-btn span:first-child { display: none; }
+  .menu-collapse.expanded + .menu-show-more .menu-expand-btn span:last-child { display: inline; }
+  .menu-collapse:not(.expanded) + .menu-show-more .menu-expand-btn span:last-child { display: none; }
+  .menu-expand-btn {
+    background: none;
+    border: 2px solid var(--navy);
+    font-family: 'Josefin Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--navy);
+    padding: 12px 36px;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  .menu-expand-btn:hover {
+    background: var(--navy);
+    color: var(--white);
+  }
+
+  .menu-do-group { margin-bottom: 36px; columns: 2; column-gap: 40px; }
+  @media (max-width: 768px) { .menu-do-group { columns: 1; } }
   .menu-do-title {
     font-family: 'Josefin Sans', sans-serif;
     font-size: 16px;
@@ -506,6 +548,7 @@
     margin-bottom: 16px;
     padding-bottom: 8px;
     border-bottom: 1px solid var(--border);
+    break-after: avoid;
   }
 
   .menu-item {
@@ -515,6 +558,7 @@
     padding: 10px 0;
     border-bottom: 1px solid rgba(216,207,194,0.4);
     gap: 16px;
+    break-inside: avoid;
   }
   .menu-item:last-child { border-bottom: none; }
   .menu-item-info { flex: 1; min-width: 0; }
@@ -1179,6 +1223,7 @@
       <button class="menu-tab" data-menu="postres" data-i18n="menu.tab_postres">Postres</button>
     </div>
 
+    <div class="menu-collapse" id="menuCollapse">
     <div class="menu-panel active" id="panel-bodega">
       <div class="menu-subtabs" id="bodegaSubtabs">
         <button class="menu-subtab active" data-sub="tintos" data-i18n="menu.sub_tintos">Tintos</button>
@@ -1203,6 +1248,13 @@
     </div>
     <div class="menu-panel" id="panel-postres">
       <p style="text-align:center;color:var(--muted);padding:40px 0;" data-i18n="menu.coming_soon">Próximamente</p>
+    </div>
+    </div>
+    <div class="menu-show-more" id="menuShowMore">
+      <button class="menu-expand-btn" id="menuExpandBtn">
+        <span data-i18n="menu.show_more">Ver carta completa</span>
+        <span data-i18n="menu.show_less">Ver menos</span>
+      </button>
     </div>
   </div>
 </section>
@@ -1459,6 +1511,8 @@
       'menu.sub_rosados': 'Rosados',
       'menu.sub_espumosos': 'Cavas y Champagnes',
       'menu.coming_soon': 'Próximamente',
+      'menu.show_more': 'Ver carta completa',
+      'menu.show_less': 'Ver menos',
       'reviews.label': 'Lo que dicen de nosotros',
       'reviews.title': 'Opiniones de nuestros <em>clientes</em>',
       'reviews.source': 'en Google',
@@ -1535,6 +1589,8 @@
       'menu.sub_rosados': 'Rosé wines',
       'menu.sub_espumosos': 'Cavas & Champagnes',
       'menu.coming_soon': 'Coming soon',
+      'menu.show_more': 'See full menu',
+      'menu.show_less': 'Show less',
       'reviews.label': 'What they say about us',
       'reviews.title': 'What our <em>guests</em> say',
       'reviews.source': 'on Google',
@@ -1875,6 +1931,7 @@
     this.querySelectorAll('.menu-subtab').forEach(function(b) { b.classList.remove('active'); });
     btn.classList.add('active');
     bodegaContainer.innerHTML = renderWineGroup(bodegaData[sub]);
+    document.getElementById('menuCollapse').classList.remove('expanded');
   });
 
   document.getElementById('menuTabs').addEventListener('click', function(e) {
@@ -1885,6 +1942,21 @@
     btn.classList.add('active');
     document.querySelectorAll('.menu-panel').forEach(function(p) { p.classList.remove('active'); });
     document.getElementById('panel-' + menu).classList.add('active');
+    var mc = document.getElementById('menuCollapse');
+    mc.classList.remove('expanded');
+  });
+
+  document.getElementById('menuExpandBtn').addEventListener('click', function() {
+    var mc = document.getElementById('menuCollapse');
+    mc.classList.toggle('expanded');
+    if (mc.classList.contains('expanded')) {
+      this.querySelector('span:first-child').style.display = 'none';
+      this.querySelector('span:last-child').style.display = 'inline';
+    } else {
+      this.querySelector('span:first-child').style.display = 'inline';
+      this.querySelector('span:last-child').style.display = 'none';
+      document.getElementById('carta').scrollIntoView({ behavior: 'smooth' });
+    }
   });
 
   // ─── MOBILE NAV ───
